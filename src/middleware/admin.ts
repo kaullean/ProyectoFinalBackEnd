@@ -6,7 +6,6 @@ export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
     let method = req.method;
   
     if (admin) {
-      console.log("MiddlewareLog- Credencial autorizada");
       next();
     } else {
       res.status(401).json({
