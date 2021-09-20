@@ -9,14 +9,14 @@ const miRouter = Router();
 
 miRouter.get(
     '/listar',
-    productosController.hayProductos,
+    asyncHandler(productosController.hayProductos),
     asyncHandler(productosController.getProducts)
 );
 
 miRouter.get(
     '/listar/:id',
-    productosController.hayProductos,
-    productosController.productExists,
+    asyncHandler(productosController.hayProductos),
+    asyncHandler(productosController.productExists),
     asyncHandler(productosController.getProducts)
 );
 
@@ -30,17 +30,17 @@ miRouter.post(
 miRouter.put(
     '/actualizar/:id',
     checkAdmin,
-    productosController.hayProductos,
-    productosController.productExists,
-    productosController.isAproduct,    
+    asyncHandler(productosController.hayProductos),
+    asyncHandler(productosController.productExists),
+    asyncHandler(productosController.isAproduct),    
     asyncHandler(productosController.updateProducts)
 );
 
 miRouter.delete(
     '/borrar/:id',
     checkAdmin,
-    productosController.hayProductos,
-    productosController.productExists,
+    asyncHandler(productosController.hayProductos),
+    asyncHandler(productosController.productExists),
     asyncHandler(productosController.deleteProducts)
 );
 

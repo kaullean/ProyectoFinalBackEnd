@@ -17,16 +17,19 @@ export class ProductosMemDAO implements ProductBaseClass {
       { _id: this.proximoID(), timestamp:new Date(), nombre: 'calculadora', descripcion:'calculadora cientifica', codigo: "codigoCalculadora", fotoUrl: "url/calculadora", precio: 300,stock:30},
       { _id: this.proximoID(), timestamp:new Date(), nombre: 'escuadra', descripcion:'escuadra 45 grados', codigo: "codigoEscuadra", fotoUrl: "url/escuadra", precio: 400,stock:40},
       { _id: this.proximoID(), timestamp:new Date(), nombre: 'regla', descripcion:'regla 20cm transparente', codigo: "codigoRegla", fotoUrl: "url/regla", precio: 500,stock:50},
-
+      { _id: this.proximoID(), timestamp:new Date(), nombre: 'lapiz', descripcion:'Lapiz HB negro', codigo: "codigoLapiz", fotoUrl: "url/lapiz", precio: 10,stock:10},
+      
     ];
     mockData.forEach((aMock) => this.productos.push(aMock));
   }
+
   proximoID(){
 
     const proximoId=Number(this.ID)+1
     this.ID=proximoId.toString();
     return this.ID;
   }
+  
   findIndex(id: string) {
     return this.productos.findIndex((aProduct) => aProduct._id == id);
   }
@@ -46,12 +49,7 @@ export class ProductosMemDAO implements ProductBaseClass {
     const newItem: Product = {
       _id: this.proximoID(),
       timestamp: new Date(),
-      nombre: data.nombre,
-      descripcion: data.descripcion,
-      codigo: data.codigo,
-      fotoUrl: data.fotoUrl,
-      precio: data.precio,
-      stock: data.stock,
+      ...data
     };
     
     this.productos.push(newItem);
@@ -79,7 +77,7 @@ export class ProductosMemDAO implements ProductBaseClass {
   async query(options: ProductQuery): Promise<Product[]> {
       type Conditions = (aProduct: Product) => boolean;
       const query: Conditions[] = [];
-      console.log("filtro x quert");
+      console.log("filtro x query");
       
       if (options.nombre)
           query.push((aProduct: Product) => aProduct.nombre == options.nombre);
