@@ -77,7 +77,7 @@ export class ProductosMemDAO implements ProductBaseClass {
   async query(options: ProductQuery): Promise<Product[]> {
       type Conditions = (aProduct: Product) => boolean;
       const query: Conditions[] = [];
-      console.log("filtro x query");
+      console.log(options);
       
       if (options.nombre)
           query.push((aProduct: Product) => aProduct.nombre == options.nombre);

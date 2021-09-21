@@ -6,15 +6,20 @@ import {
     ProductQuery,
   } from '../products.interface';
   
-export const sqliteDB = knex({
-  client: 'sqlite3',
-  connection: { filename: './midbligera.sqlite' },
-  useNullAsDefault: true,
-});
+  export const mySQLDB = knex({
+    client: 'mysql',
+    connection: {
+      host: '127.0.0.1',
+      user: 'root',
+      password: '',
+      database: 'mySQLPersistencia',
+    },
+    pool: { min: 0, max: 7 },
+  });
 
 
 /*Faltaria definir mas especificamente los campos de la tabla*/
-export class ProductosSql3DAO implements ProductBaseClass {
+export class ProductosMYSQL3DAO implements ProductBaseClass {
     private productos: Product[] = [];
     private ID: string='0';
 
@@ -23,27 +28,27 @@ export class ProductosSql3DAO implements ProductBaseClass {
 
     }
     async inicializarDB(){
-        await sqliteDB.schema.hasTable('productos').then((exists) => {
+      
+        await mySQLDB.schema.hasTable('productos').then((exists) => {
             if (!exists) {
-                console.log('NO EXISTE LA TABLA Productos. VAMOS A CREARLA');
-                sqliteDB.schema
+              console.log('NO EXISTE LA TABLA PRODUCTOS. VAMOS A CREARLA');
+              mySQLDB.schema
                 .createTable('productos', (table) => {
-                    table.string('_id')
-                    table.timestamp('timestamp').defaultTo(new Date())
-                    table.string('nombre')
-                    table.string('descripcion')
-                    table.string('codigo')
-                    table.integer('fotoUrl')
-                    table.integer('precio')
-                    table.integer('stock')
-            
+                    table.string('_id').notNullable();
+                    table.timestamp('timestamp').defaultTo(mySQLDB.fn.now())
+                    table.string('nombre').notNullable();
+                    table.string('descripcion').notNullable();
+                    table.string('codigo').notNullable();
+                    table.string('fotoUrl').notNullable();
+                    table.integer('precio').notNullable();
+                    table.integer('stock').notNullable();
                 })
                 .then(() => {
-                    console.log('DONE');
+                  console.log('DONE');
                 });
             }
-        });
-          
+          });
+
         const mockData = [
             { _id: this.proximoID(), timestamp:new Date(), nombre: 'lapiz', descripcion:'Lapiz HB negro', codigo: "codigoLapiz", fotoUrl: "url/lapiz", precio: 100,stock:10},
             { _id: this.proximoID(), timestamp:new Date(), nombre: 'goma', descripcion:'goma blanca', codigo: "codigoGoma", fotoUrl: "url/goma", precio: 200,stock:20},
@@ -52,7 +57,7 @@ export class ProductosSql3DAO implements ProductBaseClass {
             { _id: this.proximoID(), timestamp:new Date(), nombre: 'regla', descripcion:'regla 20cm transparente', codigo: "codigoRegla", fotoUrl: "url/regla", precio: 500,stock:50},
         ];
 
-        mockData.forEach(async(aMock) => await sqliteDB('productos').insert(aMock));
+        mockData.forEach(async(aMock) => await mySQLDB('productos').insert(aMock));
 
     }
     proximoID(){ 
@@ -68,9 +73,9 @@ export class ProductosSql3DAO implements ProductBaseClass {
   
     async get(id?: string): Promise<Product[]> {
       if (id) {
-        return await sqliteDB.from('productos').where({ _id : id}).select();
+        return await mySQLDB.from('productos').where({ _id : id}).select();
       }
-      return await sqliteDB.from('productos').select();
+      return await mySQLDB.from('productos').select();
     }
   
     async add(data: newProduct): Promise<Product> {
@@ -80,30 +85,30 @@ export class ProductosSql3DAO implements ProductBaseClass {
         ...data
       };
       
-       await sqliteDB('productos').insert(newItem);
+       await mySQLDB('productos').insert(newItem);
   
        return newItem;
     }
   
     async update(id: string, newProductData: newProduct): Promise<Product> {
     
-       await sqliteDB.from('productos').where({ _id : id }).update(newProductData);
-       const updatedProduct=await sqliteDB.from('productos').where({ _id : id }).select();
-       const aux=updatedProduct[0]//Horrible, pero la unica forma de parsear lo que me devuelve la base de datos para que sea un solo objeto    
+       await mySQLDB.from('productos').where({ _id : id }).update(newProductData);
+       const updatedProduct=await mySQLDB.from('productos').where({ _id : id }).select();
+       const aux=updatedProduct[0] 
        return aux;
     }
   
     async delete(id: string): Promise<Product> {
 
-        const deletedItem=await sqliteDB.from('productos').where({ _id : id}).select();
+        const deletedItem=await mySQLDB.from('productos').where({ _id : id}).select();
         const aux=deletedItem[0]  
-        sqliteDB.from('productos').where({ _id : id }).del()
+        await mySQLDB.from('productos').where({ _id : id }).del()
         return aux;
       
     }
   
     async query(options: ProductQuery): Promise<Product[]> {
-        const busqueda=await sqliteDB.from('productos').where({...options}).select();//jaja funciono (ni idea como) 
+        const busqueda=await mySQLDB.from('productos').where({...options}).select();//jaja funciono (ni idea como) 
         return busqueda;
      }
   }
