@@ -16,7 +16,9 @@ export enum TipoPersistencia {
 import path from 'path';
 
 export class NoticiasFactoryDAO {
+  
   static get(tipo: TipoPersistencia) {
+
     switch (tipo) {
       case TipoPersistencia.SQLITE3:
         console.log('Retornando instancia de SQLITE3');
@@ -30,6 +32,7 @@ export class NoticiasFactoryDAO {
       case TipoPersistencia.MYSQL:
         console.log('Retornando instancia de MYSQL');       
         return new ProductosMYSQL3DAO();
+
       case TipoPersistencia.MONGODB:
         console.log('Retornando instancia de MONGODB LOCAL');       
         return new ProductosMongoDBDAO();

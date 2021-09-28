@@ -7,6 +7,7 @@ import {
 } from '../products.interface';
 
 export class ProductosFSDAO implements ProductBaseClass {
+  
   private productos: Product[] = [];
   private nombreArchivo: string;
   private ID: string='0';
@@ -26,11 +27,13 @@ export class ProductosFSDAO implements ProductBaseClass {
     this.productos = mockData;
     this.guardar();
   }
+
   proximoID(){ 
     const proximoId=Number(this.ID)+1
     this.ID=proximoId.toString();
     return this.ID;
   }
+
   async leer(archivo: string): Promise<void> {
     this.productos = JSON.parse(await fs.promises.readFile(archivo, 'utf-8'));
   }
@@ -104,15 +107,65 @@ export class ProductosFSDAO implements ProductBaseClass {
   }
 
   async query(options: ProductQuery): Promise<Product[]> {
+
     await this.leer(this.nombreArchivo);
     type Conditions = (aProduct: Product) => boolean;
     const query: Conditions[] = [];
-
+      
     if (options.nombre)
-      query.push((aProduct: Product) => aProduct.nombre == options.nombre);
+    query.push((aProduct: Product) => aProduct.nombre == options.nombre);
 
-    if (options.precio)
-      query.push((aProduct: Product) => aProduct.precio == options.precio);
+    if (options.codigo)
+      query.push((aProduct: Product) => aProduct.codigo == options.codigo);
+      
+
+    if (options.precioMin)
+      query.push((aProduct: Product) => {
+        let aux : boolean = false;
+        if(typeof options.precioMin !=="undefined" ){
+          aux=aProduct.precio >= options.precioMin;
+        } 
+        if(typeof options.precioMin !=="undefined" && typeof options.precioMax !== "undefined")           
+          aux=aProduct.precio >= options.precioMin && aProduct.precio <= options.precioMax
+
+        return aux;             
+    });    
+    
+    if (options.precioMax)
+      query.push((aProduct: Product) => {
+        let aux : boolean = false;
+        if(typeof options.precioMax !== "undefined" ){
+          aux=aProduct.precio <= options.precioMax;
+        }        
+        if(typeof options.precioMin !== "undefined" && typeof options.precioMax !== "undefined")           
+          aux=aProduct.precio >= options.precioMin && aProduct.precio <= options.precioMax
+
+        return aux;  
+    });
+
+    if (options.stockMin)
+      query.push((aProduct: Product) => {
+      let aux : boolean = false;
+      if(typeof options.stockMin !=="undefined" ){
+        aux=aProduct.stock >= options.stockMin;
+      }        
+      if(typeof options.stockMin !== "undefined" && typeof options.stockMax !== "undefined")           
+        aux=aProduct.stock >= options.stockMin && aProduct.stock <= options.stockMax
+
+      return aux;  
+    });
+
+    if (options.stockMax)
+      query.push((aProduct: Product) => {
+        let aux : boolean = false;
+        if(typeof options.stockMax !=="undefined" ){
+          aux=aProduct.stock <= options.stockMax;
+        }        
+        if(typeof options.stockMin !=="undefined" && typeof options.stockMax !=="undefined")           
+          aux=aProduct.stock >= options.stockMin && aProduct.stock <= options.stockMax
+
+        return aux;  
+    });
 
     return this.productos.filter((aProduct) => query.every((x) => x(aProduct)));
   }

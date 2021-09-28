@@ -54,21 +54,22 @@ class Producto {
   */
   async getProducts(req: Request, res: Response) {
     const {id}=req.params;
-    const { nombre, descripcion , codigo , fotoUrl , precio , stock } = req.query;
+    const { nombre, stockMin , stockMax , precioMin , precioMax, codigo } = req.query;
     if (id) {
       return res.json({
         data: await productsAPI.getProducts(id),
       });
     }
-
+    
     const query: ProductQuery ={};
 
     if(nombre) query.nombre = nombre.toString();
-    if(descripcion) query.descripcion = descripcion.toString();
     if(codigo) query.codigo = codigo.toString();
-    if(fotoUrl) query.fotoUrl = fotoUrl.toString();
-    if(precio) query.precio = Number(precio);
-    if(stock) query.stock = Number(stock);
+    if(stockMin) query.stockMin = Number(stockMin);
+    if(stockMax) query.stockMax = Number(stockMax);
+    if(precioMin) query.precioMin = Number(precioMin);
+    if(precioMax) query.precioMax = Number(precioMax);
+
 
     if(Object.keys(query).length){
       const productos = await productsAPI.query(query);

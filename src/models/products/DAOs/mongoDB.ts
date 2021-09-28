@@ -88,11 +88,16 @@ export class ProductosMongoDBDAO implements ProductBaseClass {
     }
 
     async query(options: ProductQuery): Promise<Product[]> {
-    let query: ProductQuery = {};
+        const query: ProductQuery ={nombre:"lapiz",stockMin:1,stockMax:10,precioMin:1,precioMax:10,codigo:"codigo"};
 
     if (options.nombre) query.nombre = options.nombre;
 
-    if (options.precio) query.precio = options.precio;
+    if (options.precioMax) query.precioMax = options.precioMax;
+    if (options.precioMin) query.precioMin = options.precioMin;
+    if (options.stockMin) query.stockMin = options.stockMin;
+    if (options.stockMax) query.stockMax = options.stockMax;
+    if (options.codigo) query.codigo = options.codigo;
+
 
     return this.productos.find(query);
     }

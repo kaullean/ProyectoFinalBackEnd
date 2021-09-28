@@ -108,7 +108,9 @@ export class ProductosMYSQL3DAO implements ProductBaseClass {
     }
   
     async query(options: ProductQuery): Promise<Product[]> {
-        const busqueda=await mySQLDB.from('productos').where({...options}).select();//jaja funciono (ni idea como) 
+        const busqueda=await mySQLDB.from('productos')
+        .where({nombre:options.nombre, codigo:options.codigo}).select();
+
         return busqueda;
      }
   }

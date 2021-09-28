@@ -6,7 +6,7 @@ import { ProductQuery } from '../models/products/products.interface';
 /**
  * Con esta variable elegimos el tipo de persistencia
  */
-const tipo = TipoPersistencia.MONGODB;
+const tipo = TipoPersistencia.FILESYSTEM;
 
 class prodAPI {
   private productos;

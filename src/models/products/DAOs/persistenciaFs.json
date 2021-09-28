@@ -1,17 +1,17 @@
 [
 	{
 		"_id": "1",
-		"timestamp": "2021-09-21T06:32:19.616Z",
-		"nombre": "lapiz",
-		"descripcion": "Lapiz HB negro",
-		"codigo": "codigoLapiz",
-		"fotoUrl": "url/lapiz",
-		"precio": 100,
-		"stock": 10
+		"timestamp": "2021-09-28T06:37:38.424Z",
+		"nombre": "Producto actualizado",
+		"descripcion": "descripcion del producto actualizado",
+		"codigo": "codigo del producto actualizado",
+		"fotoUrl": "fotoUrl/del producto actualizado",
+		"precio": 999,
+		"stock": 9
 	},
 	{
 		"_id": "2",
-		"timestamp": "2021-09-21T06:32:19.616Z",
+		"timestamp": "2021-09-28T06:37:38.424Z",
 		"nombre": "goma",
 		"descripcion": "goma blanca",
 		"codigo": "codigoGoma",
@@ -21,7 +21,7 @@
 	},
 	{
 		"_id": "3",
-		"timestamp": "2021-09-21T06:32:19.616Z",
+		"timestamp": "2021-09-28T06:37:38.424Z",
 		"nombre": "calculadora",
 		"descripcion": "calculadora cientifica",
 		"codigo": "codigoCalculadora",
@@ -31,7 +31,7 @@
 	},
 	{
 		"_id": "4",
-		"timestamp": "2021-09-21T06:32:19.616Z",
+		"timestamp": "2021-09-28T06:37:38.424Z",
 		"nombre": "escuadra",
 		"descripcion": "escuadra 45 grados",
 		"codigo": "codigoEscuadra",
@@ -41,7 +41,7 @@
 	},
 	{
 		"_id": "5",
-		"timestamp": "2021-09-21T06:32:19.616Z",
+		"timestamp": "2021-09-28T06:37:38.424Z",
 		"nombre": "regla",
 		"descripcion": "regla 20cm transparente",
 		"codigo": "codigoRegla",
@@ -51,12 +51,32 @@
 	},
 	{
 		"_id": "6",
-		"timestamp": "2021-09-21T06:32:19.616Z",
+		"timestamp": "2021-09-28T06:37:38.424Z",
 		"nombre": "lapiz",
 		"descripcion": "Lapiz HB negro",
 		"codigo": "codigoLapiz",
 		"fotoUrl": "url/lapiz",
 		"precio": 10,
 		"stock": 10
+	},
+	{
+		"_id": "7",
+		"timestamp": "2021-09-28T06:38:21.246Z",
+		"nombre": "lapiz",
+		"descripcion": "descripcion del producto agregado",
+		"codigo": "codigo del producto agregado",
+		"fotoUrl": "fotoUrl/del producto agregado",
+		"precio": 999,
+		"stock": 9
+	},
+	{
+		"_id": "8",
+		"timestamp": "2021-09-28T06:38:21.812Z",
+		"nombre": "lapiz",
+		"descripcion": "descripcion del producto agregado",
+		"codigo": "codigo del producto agregado",
+		"fotoUrl": "fotoUrl/del producto agregado",
+		"precio": 999,
+		"stock": 9
 	}
 ]

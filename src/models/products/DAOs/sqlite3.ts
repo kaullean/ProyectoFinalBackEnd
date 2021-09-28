@@ -103,7 +103,7 @@ export class ProductosSql3DAO implements ProductBaseClass {
     }
   
     async query(options: ProductQuery): Promise<Product[]> {
-        const busqueda=await sqliteDB.from('productos').where({...options}).select();//jaja funciono (ni idea como) 
+        const busqueda=await sqliteDB.from('productos').where({nombre:options.nombre,codigo:options.codigo}).select();
         return busqueda;
      }
   }

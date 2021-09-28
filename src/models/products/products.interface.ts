@@ -19,14 +19,13 @@ export interface newProduct{
   }
   
   export interface ProductQuery {
-    _id?: string;
-    timestamp?: Date;
+
     nombre?: string;
-    descripcion?: string;
-    codigo?: string;
-    fotoUrl?: string;
-    precio?: number;
-    stock?: number;
+    codigo?:string;
+    precioMin?: number;
+    precioMax?: number;
+    stockMin?: number;
+    stockMax?: number;
   }
   
   export interface ProductBaseClass {
